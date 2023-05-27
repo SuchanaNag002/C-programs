@@ -1,0 +1,1 @@
+strrev(opnds[topd]);
