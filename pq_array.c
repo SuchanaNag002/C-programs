@@ -1,54 +1,60 @@
 #include <stdio.h>
 #include <stdlib.h>
 int front = -1, rear = -1;
+struct node
+{
+    int info;
+    struct node *link;
+};
+typedef struct node n;
 void display(int *arr, int *priority)
 {
     if (front == -1 && rear == -1)
     {
-        printf("\nQueue is empty!\n");
+        printf("\nQueue is empty");
         return;
     }
     int i = front;
     while (i <= rear)
     {
-        printf("Element: %d, Priority: %d\n", arr[i], priority[i]);
+        printf("\nElement: %d, Priority: %d", arr[i], priority[i]);
         i++;
     }
 }
 void push(int *arr, int *priority, int maxsize)
 {
-    int item, x;
+    int item, prio;
     if (rear == (maxsize - 1))
     {
-        printf("\nOverflow\n");
+        printf("\nOverflow!!!Insertion not possible");
         return;
     }
     else
     {
-        printf("Enter the item to be inserted and its priority: ");
-        scanf("%d%d", &item, &x);
-        if (front == rear && front == -1)
+        printf("\nEnter the item to be inserted and its prority: ");
+        scanf("%d%d", &item, &prio);
+        if (front == -1 && rear == -1)
             front = rear = 0;
         else
             rear++;
         arr[rear] = item;
-        priority[rear] = x;
+        priority[rear] = prio;
     }
 }
 void pop(int *arr, int *priority)
 {
-    int i, j;
-    if (front == rear && front == -1)
+    int i, j, maxp, maxn;
+    if (front == -1 && rear == -1)
     {
-        printf("\nUnderflow!Deletion not possible\n");
+        printf("\nUnderflow!!!Deletion not possible");
         return;
     }
     if (front == rear)
         front = rear = -1;
     else
     {
-        int maxp = priority[front];
-        int maxn = arr[front];
+        maxn = arr[front];
+        maxp = priority[front];
         for (i = front; i <= rear; i++)
         {
             if (priority[i] > maxp)
@@ -70,13 +76,18 @@ void pop(int *arr, int *priority)
             }
         }
         rear--;
-        printf("%d was deleted with priority %d\n", maxn, maxp);
+        printf("%d was deleted having priority %d\n", maxn, maxp);
     }
 }
 void peek(int *arr, int *priority)
 {
-    int maxp = priority[front], maxi;
-    for (int i = front; i <= rear; i++)
+    if (front == -1 && rear == -1)
+    {
+        printf("\nQueue is empty");
+        return;
+    }
+    int maxp = priority[front], maxi = arr[front], i;
+    for (i = front; i <= rear; i++)
     {
         if (priority[i] > maxp)
         {
@@ -101,20 +112,20 @@ int main()
         scanf("%d", &ch);
         switch (ch)
         {
-        case 1:
-            display(arr, priority);
-            break;
-        case 2:
-            push(arr, priority, maxsize);
-            break;
-        case 3:
-            pop(arr, priority);
-            break;
-        case 4:
-            peek(arr, priority);
-            break;
-        case 5:
-            exit(0);
+            case 1:
+                display(arr, priority);
+                break;
+            case 2:
+                push(arr, priority, maxsize);
+                break;
+            case 3:
+                pop(arr, priority);
+                break;
+            case 4:
+                peek(arr, priority);
+                break;
+            case 5:
+                exit(0);
         }
     }
 }
